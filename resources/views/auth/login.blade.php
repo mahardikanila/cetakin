@@ -171,13 +171,13 @@
                                 </div>
                             </a>
 
-                            <a href="#" class="connect googleplus">
+                            <a href="login/google" class="connect googleplus">
                             <div class="connect__icon">
                             <i class="fa fa-google-plus"></i>
                             </div>
                             <div class="connect__context">
-                            {{--<span>Create an account with <strong>Google+</strong></span>--}}
-                                <span>Coming <strong>Soon</strong></span>
+                            <span>Create an account with <strong>Google+</strong></span>
+                                {{--<span>Coming <strong>Soon</strong></span>--}}
                             </div>
                             </a>
                         </div>
@@ -234,13 +234,13 @@
                                     <span>Sign in with <strong>Facebook</strong></span>
                                 </div>
                             </a>
-                            <a href="#" class="connect googleplus">
+                            <a href="login/google" class="connect googleplus">
                             <div class="connect__icon">
                             <i class="fa fa-google-plus"></i>
                             </div>
                             <div class="connect__context">
-                            {{--<span>Sign in with <strong>Google+</strong></span>--}}
-                            <span>Coming <strong>Soon</strong></span>
+                            <span>Sign in with <strong>Google+</strong></span>
+                            {{--<span>Coming <strong>Soon</strong></span>--}}
                             </div>
                             </a>
                         </div>

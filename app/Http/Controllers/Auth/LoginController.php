@@ -40,33 +40,67 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
-
-    public function handleProviderCallback()
+    public function handleProviderCallback($provider)
     {
-        $userSocial = Socialite::driver('facebook')->user();
+        $user = Socialite::driver($provider)->user();
 
-//        return $userSocial->email;
+        $authUser = $this->findOrCreateUser($user, $provider);
+        Auth::login($authUser, true);
+        return redirect($this->redirectTo);
+    }
 
-        $findUser = User::where('email', $userSocial->email)->first();
-        if ($findUser) {
-            Auth::login($findUser);
-            return redirect('home');
-        } else {
-            $user = new User();
-            $user->name = $userSocial->name;
-            $user->email = $userSocial->email;
-            $user->password = bcrypt($userSocial->email);
-            $user->save();
-            Auth::login($user);
-            return redirect('home');
+    public function findOrCreateUser($user, $provider)
+    {
+        $authUser = User::where('provider_id', $user->id)->first();
+        if ($authUser) {
+            return $authUser;
         }
-
-
+        return User::create([
+            'name'     => $user->name,
+            'email'    => $user->email,
+            'provider' => $provider,
+            'provider_id' => $user->id
+        ]);
     }
+
+
+
+
+//    facebook
+
+
+
+//    public function redirectToProvider()
+//    {
+//        return Socialite::driver('facebook')->redirect();
+//    }
+//
+//
+//    public function handleProviderCallback()
+//    {
+//        $userSocial = Socialite::driver('facebook')->user();
+//
+////        return $userSocial->email;
+//
+//        $findUser = User::where('email', $userSocial->email)->first();
+//        if ($findUser) {
+//            Auth::login($findUser);
+//            return redirect('home');
+//        } else {
+//            $user = new User();
+//            $user->name = $userSocial->name;
+//            $user->email = $userSocial->email;
+//            $user->password = bcrypt($userSocial->email);
+//            $user->save();
+//            Auth::login($user);
+//            return redirect('home');
+//        }
+//
+//
+//    }
 }
